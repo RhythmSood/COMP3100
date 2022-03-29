@@ -5,6 +5,9 @@ public class MyClient {
     public static void main(String[] args) {  
          xmlReader handler = new xmlReader();
          System.out.println(handler.bigServer());
+         int serverLimit = Integer.parseInt(handler.bigServer().get(1));
+         int count = 0;
+
         try{  
             Socket s=new Socket("localhost",50000);  
             BufferedReader dis=new BufferedReader(new InputStreamReader(s.getInputStream())); //reads client message
@@ -13,16 +16,20 @@ public class MyClient {
             jobschd(dis, dout, "HELO\n");
             jobschd(dis, dout, "AUTH Rhythm\n");
             String job = jobschd(dis, dout, "REDY\n");
-            while(!job.equals("NONE")) {
+            while(!job.equals("NONE") && count < serverLimit) {
                 if(job.startsWith("JCPL")) {
                     jobschd(dis, dout, "REDY\n");
                 } else if(job.startsWith("JOBN")){
                     String temp = job.substring(job.indexOf(' ')+1);
                     temp = temp.substring(temp.indexOf(' ')+1);
                     String jobID = temp.substring(0, temp.indexOf(' '));
-                    jobschd(dis, dout, "SCHD "+jobID+" "+handler.bigServer().get(0)+" 0\n");
+                    jobschd(dis, dout, "SCHD "+jobID+" "+handler.bigServer().get(0)+" "+count+"\n");
+                    count++;
                 }
                 job = jobschd(dis, dout, "REDY\n");
+                if(count == serverLimit) {
+                    count = 0;
+                }
             }
             
             dout.close();
