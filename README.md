@@ -17,3 +17,10 @@ All tests, given test files, passes. The ds-server says 'NOT PASSED' but the 'di
 
 ## IMPORTANT!!
 Sometimes, system being slow, the xml parser is not able to read the newly updated file after running 'AUTH' command. So, try to run the TEST AGAIN! and it will run smoothly.
+
+Moreover, my current 'ds-server' is in src folder and the corresponding 'ds-system.xml' too.
+
+## XML PARSER/READER
+The 'xmlReader.java' first reads the 'ds-system.xml' and sends the data to the parser/'xmlParser.java'. XML parser then formats the data and returns the largest server based on number of cores. 
+
+'xmlReader.java' currently gets the 'ds-system.xml' from './ds-system.xml' directory. If this gives an error, please update the directory to the new 'ds-system.xml'. Normally, 'ds-system.xml' is created/updated when the client sends the 'AUTH' command and completes authorisation. The 'ds-system.xml' is always created where the current/running 'ds-server' file is located. In this case it is the 'src' folder in 'COMP3100' project.
