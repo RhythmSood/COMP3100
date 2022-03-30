@@ -12,7 +12,8 @@ ds-sim is a discrete-event simulator that has been developed primarily for lever
 
 `$ ds-client -a bf`
 
-
-
 ## Concerning Test Files
 All tests, given test files, passes. The ds-server says 'NOT PASSED' but the 'diff' command gives the correct info that matches with the ds-client.
+
+## IMPORTANT!!
+Sometimes, system being slow, the xml parser is not able to read the newly updated file after running 'AUTH' command. So, try to run the TEST AGAIN! and it will run smoothly.
