@@ -30,9 +30,6 @@ public class MyClient {
                 if(count == serverLimit) {
                     count = 0;
                 }
-                if(job.equals("NONE")) {
-                    jobschd(dis, dout, "QUIT\n");
-                }
             }
             
             dout.close();

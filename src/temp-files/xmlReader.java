@@ -9,7 +9,7 @@ import java.util.List;
 
 public class xmlReader {
 
-    public static final String FILENAME = "./ds-system.xml";
+    public static final String FILENAME = "./src/pre-compiled/aarch64/ds-system.xml";
     private static List<String> server = new ArrayList<>();
 
     public static void main(String[] args) {
