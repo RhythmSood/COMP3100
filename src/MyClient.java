@@ -8,33 +8,33 @@ public class MyClient {
          int serverLimit = Integer.parseInt(handler.bigServer().get(1));
          int count = 0;
 
+         System.out.println();
         try{  
             Socket s=new Socket("localhost",50000);  
             BufferedReader dis=new BufferedReader(new InputStreamReader(s.getInputStream())); //reads client message
             DataOutputStream dout=new DataOutputStream(s.getOutputStream());  //sends a message 
 
             jobschd(dis, dout, "HELO\n");
-            jobschd(dis, dout, "AUTH Rhythm\n");
+            jobschd(dis, dout, "AUTH parallels\n");
             String job = jobschd(dis, dout, "REDY\n");
             while(!job.equals("NONE") && count < serverLimit) {
                 if(job.startsWith("JCPL")) {
-                    jobschd(dis, dout, "REDY\n");
+                    job = jobschd(dis, dout, "REDY\n");
                 } else if(job.startsWith("JOBN")){
                     String temp = job.substring(job.indexOf(' ')+1);
                     temp = temp.substring(temp.indexOf(' ')+1);
                     String jobID = temp.substring(0, temp.indexOf(' '));
                     jobschd(dis, dout, "SCHD "+jobID+" "+handler.bigServer().get(0)+" "+count+"\n");
                     count++;
-                }
-                job = jobschd(dis, dout, "REDY\n");
-                if(count == serverLimit) {
+                    job = jobschd(dis, dout, "REDY\n");
+                } else
+                    job = jobschd(dis, dout, "REDY\n");
+
+                if(count >= serverLimit) {
                     count = 0;
                 }
-                if(job.equals("NONE")) {
-                    jobschd(dis, dout, "QUIT\n");
-                }
             }
-            
+            jobschd(dis, dout, "QUIT\n");
             dout.close();
             s.close(); 
         }

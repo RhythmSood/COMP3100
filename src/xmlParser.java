@@ -38,8 +38,9 @@ public class xmlParser extends DefaultHandler {
           temp.add(memory);
           server.add(temp);
           //System.out.println("Server type:"+" "+type+" ,limit:"+limit+" ,cores:"+cores+" ,memory:"+memory);
+          int maxCores = 0;
           for(List<String> x : server) {
-              int maxCores = 0;
+              
               if(Integer.parseInt(x.get(2)) > maxCores) {
                 maxCores = Integer.parseInt(x.get(2));
                 largestServer = x;

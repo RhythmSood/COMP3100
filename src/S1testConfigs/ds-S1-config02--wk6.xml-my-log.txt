@@ -3,8 +3,8 @@
 # Waiting for connection to port 50000 of IP address 127.0.0.1
 RCVD HELO
 SENT OK
-RCVD AUTH Rhythm
-# Welcome  Rhythm!
+RCVD AUTH parallels
+# Welcome  parallels!
 # The system information can be read from 'ds-system.xml'
 SENT OK
 RCVD REDY
@@ -107,8 +107,6 @@ t:        181 job    14 on # 0 of server xlarge RUNNING
 SENT JCPL 181 12 xlarge 0
 RCVD REDY
 SENT JOBN 181 16 2648 2 1300 1200
-RCVD REDY
-SENT JOBN 181 16 2648 2 1300 1200
 RCVD SCHD 16 xlarge 0
 t:        181 job    16 (waiting) on # 0 of server xlarge (active) SCHEDULED
 SENT OK
@@ -181,8 +179,6 @@ t:        388 job     8 on # 0 of server xlarge COMPLETED
 SENT JCPL 388 8 xlarge 0
 RCVD REDY
 SENT JOBN 417 27 151 8 8400 16200
-RCVD REDY
-SENT JOBN 417 27 151 8 8400 16200
 RCVD SCHD 27 xlarge 1
 t:        417 job    27 (waiting) on # 1 of server xlarge (active) SCHEDULED
 SENT OK
@@ -227,8 +223,6 @@ t:        581 job    19 on # 1 of server xlarge RUNNING
 SENT JCPL 581 13 xlarge 1
 RCVD REDY
 SENT JOBN 596 32 622 2 900 2800
-RCVD REDY
-SENT JOBN 596 32 622 2 900 2800
 RCVD SCHD 32 xlarge 0
 t:        596 job    32 (waiting) on # 0 of server xlarge (active) SCHEDULED
 SENT OK
@@ -240,8 +234,6 @@ SENT OK
 RCVD REDY
 t:        674 job     1 on # 1 of server xlarge COMPLETED
 SENT JCPL 674 1 xlarge 1
-RCVD REDY
-SENT JOBN 689 34 519 4 1900 6000
 RCVD REDY
 SENT JOBN 689 34 519 4 1900 6000
 RCVD SCHD 34 xlarge 0
@@ -330,8 +322,6 @@ SENT JCPL 42734 26 xlarge 0
 RCVD REDY
 t:      84654 job    23 on # 1 of server xlarge COMPLETED
 SENT JCPL 84654 23 xlarge 1
-RCVD REDY
-SENT NONE
 RCVD REDY
 SENT NONE
 RCVD QUIT
