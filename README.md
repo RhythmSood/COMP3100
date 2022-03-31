@@ -24,6 +24,8 @@ Do not run by clicking 'run' within the java file.
 All tests, given test files, passes. Sometimes, the ds-server says 'NOT PASSED' but the 'diff' command gives the correct info that matches with the ds-client.
 
 ## IMPORTANT!!
+Do not move any java files and ds-server/ds-client from the src folder. The current version of ds-server/ds-client is aarch64. If other version is required, then replace the old with new ds-server/ds-client.
+
 Sometimes, system being slow, the xml parser is not able to read the newly updated file after running 'AUTH' command. So, try to run the TEST AGAIN! and it will run smoothly.
 
 Moreover, my current 'ds-server' is in src folder and the corresponding 'ds-system.xml' too.
