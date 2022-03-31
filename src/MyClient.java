@@ -8,14 +8,14 @@ public class MyClient {
          int serverLimit = Integer.parseInt(handler.bigServer().get(1));
          int count = 0;
 
-         System.out.println();
+         String username = System.getProperty("user.name");
         try{  
             Socket s=new Socket("localhost",50000);  
             BufferedReader dis=new BufferedReader(new InputStreamReader(s.getInputStream())); //reads client message
             DataOutputStream dout=new DataOutputStream(s.getOutputStream());  //sends a message 
 
             jobschd(dis, dout, "HELO\n");
-            jobschd(dis, dout, "AUTH parallels\n");
+            jobschd(dis, dout, "AUTH "+username+"\n");
             String job = jobschd(dis, dout, "REDY\n");
             while(!job.equals("NONE") && count < serverLimit) {
                 if(job.startsWith("JCPL")) {
