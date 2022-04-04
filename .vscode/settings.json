@@ -1,10 +1,7 @@
 {
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "src/lib/dom-2.3.0-jaxb-1.0.6.jar"
-    ],
-    "java.project.sourcePaths": [
-        "ds-sim/src",
-        "src"
-    ]
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "src/lib/dom-2.3.0-jaxb-1.0.6.jar"
+  ],
+  "java.project.sourcePaths": ["src/MyClient/XMLparser", "src/MyClient"]
 }
