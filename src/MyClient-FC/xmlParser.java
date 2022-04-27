@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class xmlReader {
+public class xmlParser {
     public static final String FILENAME = "./ds-system.xml";
     private static List<String> server = new ArrayList<>();
 
@@ -24,10 +24,5 @@ public class xmlReader {
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public List<String> bigServer() {
-        main(null);
-        return server;
     }
 }

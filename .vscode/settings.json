@@ -3,5 +3,10 @@
     "lib/**/*.jar",
     "src/lib/dom-2.3.0-jaxb-1.0.6.jar"
   ],
-  "java.project.sourcePaths": ["src/MyClient/XMLparser", "src/MyClient"]
+  "java.project.sourcePaths": [
+    "src/MyClient/XMLparser",
+    "src/MyClient",
+    "src/MyClient-FC"
+  ],
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m"
 }
