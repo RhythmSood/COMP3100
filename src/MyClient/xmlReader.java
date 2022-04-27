@@ -17,9 +17,8 @@ public class xmlReader {
         try {
             SAXParser saxParser = factory.newSAXParser();
 
-            xmlParser handler = new xmlParser();
+            xmlParserFC handler = new xmlParserFC();
             saxParser.parse(FILENAME, handler);
-            server = handler.largestServer();
 
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
