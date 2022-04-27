@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 
-public class MyClient {
+public class MyClient_fc {
     public static void main(String[] args) {  
          int count = 0;
 

@@ -12,6 +12,7 @@ public class xmlParser extends DefaultHandler{
 
   List<List<String>> server = new ArrayList<List<String>>();
   List<String> largestServer = new ArrayList<>();
+  List<String> bestCapableServer = new ArrayList<>();
 
   
   public void startElement(
@@ -52,6 +53,10 @@ public class xmlParser extends DefaultHandler{
 
   public List<String> largestServer() {
       return largestServer;
+  }
+
+  public List<String> bestCapableServer() {
+    return bestCapableServer;
   }
 
 
