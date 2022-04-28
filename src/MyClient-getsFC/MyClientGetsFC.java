@@ -22,11 +22,21 @@ public class MyClientGetsFC {
                 }
 
                 if(jobn[0].equals("JOBN")){ 
-                    jobschd(dis, dout, "GETS Capable "+jobn[4]+" "+jobn[5]+" "+jobn[6]+"\n").split(" ");
-               
-                    // String[] servers = jobschd(dis, dout, "OK\n").split(" ");
-                    // serverType = servers[0];
-                    // serverID = servers[1];
+                    String[] data = jobschd(dis, dout, "GETS Capable "+jobn[4]+" "+jobn[5]+" "+jobn[6]+"\n").split(" ");
+                    totalServers = Integer.parseInt(data[1]);
+
+                    dout.write(("OK\n").getBytes());  
+                    dout.flush();            
+
+                    for(int i = 0; i < totalServers; i++) {
+                        String reply = dis.readLine();
+                        if(i == 0) {
+                            String[] servers = reply.split(" ");
+                            serverType = servers[0];
+                            serverID = servers[1];
+                        }
+                        System.out.println(reply);
+                    }
 
                     jobschd(dis, dout, "OK\n");
                     jobschd(dis, dout, "SCHD "+jobn[2]+" "+serverType+" "+serverID+"\n");
@@ -45,23 +55,6 @@ public class MyClientGetsFC {
         dout.write((message).getBytes());  
         dout.flush();
         String str = (String)dis.readLine();
-
-        if(str.startsWith("DATA")){
-            String[] data = str.split(" ");
-            totalServers = Integer.parseInt(data[1]);
-            dout.write(("OK\n").getBytes());  
-            dout.flush();            
-
-            for(int i = 0; i < totalServers; i++) {
-                str = dis.readLine();
-                String[] servers = (String[])dis.readLine().split(" ");
-                if(i == 0) {
-                    serverType = servers[0];
-                    serverID = servers[1];
-                }
-            }
-        }
-
         System.out.println(str);
         return str;
     }  
