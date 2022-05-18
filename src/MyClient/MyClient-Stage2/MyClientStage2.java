@@ -60,6 +60,8 @@ public class MyClientStage2 {
                     } else if(!activeServers.isEmpty()) {
                         minWaitingJobs = Integer.parseInt(activeServers.get(0).split(" ")[7]);
                         minRunningJobs = Integer.parseInt(activeServers.get(0).split(" ")[8]);
+                        fitServerID = Integer.parseInt(activeServers.get(0).split(" ")[1]);
+                        fitServerType = activeServers.get(0).split(" ")[0];
 
                         for(String server : activeServers) {
                             String[] serverDetails = server.split(" ");
@@ -72,14 +74,13 @@ public class MyClientStage2 {
                                 if(Integer.parseInt(serverDetails[7]) < minWaitingJobs && Integer.parseInt(serverDetails[8]) < minRunningJobs) {
                                     fitServerType = serverDetails[0];
                                     fitServerID = Integer.parseInt(serverDetails[1]);
+                                    minWaitingJobs = Integer.parseInt(serverDetails[7]);
+                                    minRunningJobs = Integer.parseInt(serverDetails[8]);
                                 }
                             }
-
-                            if(Integer.parseInt(serverDetails[7]) == 0 && Integer.parseInt(serverDetails[8]) <= 1) {
-                                fitServerType = serverDetails[0];
-                                fitServerID = Integer.parseInt(serverDetails[1]);
-                            }
                         }
+                        jobschd(dis, dout, "SCHD"+ " "+ jobn[2]+ " " + fitServerType + " "+ fitServerID +"\n");
+                        activeServers.clear();
                     }
                 }
             }
