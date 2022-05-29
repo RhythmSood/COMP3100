@@ -18,60 +18,60 @@ public class MyClientV2 {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
-            // send HELO to server
+            //send HELO to server
             sendMessage("HELO", out);
 
-            // recieves OK from server
+            //recieves OK from server
             receiveMessage(in);
 
-            // send AUTH and authentication info to server
+            //send AUTH and authentication info to server
             sendMessage("AUTH" + " " + System.getProperty("user.name"), out);
 
-            // recieves OK from server
+            //recieves OK from server
             receiveMessage(in);
 
-            // send REDY when ready to start reading jobs
+            //send REDY when ready to start reading jobs
             sendMessage("REDY", out);
 
-            // read first job
+            //read first job info
             String msg = receiveMessage(in);
             currentJob = extractJobInfo(msg);
 
-            // schedule first job
+            //schedule first job on the most capable server
             scheduleJobCustom(in, out);
 
-            // wait for OK
+            //recieves OK from server
             receiveMessage(in);
 
-            // used for switching based on what the server's reply to REDY is
+            //used to check whether the reply after REDY is NONE or JOBN
             String command;
 
-            // used to break out of loop if no more jobs remain
+            //ends the while loop after all jobs are scheduled
             Boolean moreJobs = true;
 
-            // main loop, handles all messages from the server from now on
+            //handles all the jobs
             while (moreJobs) {
-                // send REDY for next info
+                //send REDY for next info
                 sendMessage("REDY", out);
 
-                // get server's reply
+                //revieves reply from server
                 msg = receiveMessage(in);
 
-                // set command so we can check how to handle reply
+                // set command to the first four letters of the reply (NONE, JOBN or JCPL)
                 command = msg.substring(0, 4);
 
-                // perform appropriate action based on server reply
                 switch (command) {
                     case "JOBN":
-                        // schedule the job
+                        //extract the job info
                         currentJob = extractJobInfo(msg);
 
+                        //schedule the job
                         scheduleJobCustom(in, out);
 
                         receiveMessage(in);
                         break;
                     case "NONE":
-                        // there are no more jobs so stop the loop
+                        //all jobs have been scheduled
                         moreJobs = false;
                         break;
                     default:
@@ -79,7 +79,7 @@ public class MyClientV2 {
                 }
             }
 
-            // quit
+            //quit
             sendMessage("QUIT", out);
 
             receiveMessage(in);
@@ -91,29 +91,26 @@ public class MyClientV2 {
         }
     }
 
-    // schedules jobs according to a custom algorithm
+    // schedules jobs with the fastest and most reliable algo
     private static void scheduleJobCustom(BufferedReader in, DataOutputStream out) {
         try {
             String rply;
 
-            // check for servers with necessary resources currently available
+            // returns available servers with necessary resources
             serverdata[] availServers = getServersData(in, out, "available");
 
-            // if there are servers with the required resources available, schedule to the
-            // first one
+            //schedule the job to the first available server
             if (availServers != null) {
-                // send scheduling request
+                //schedule the job
                 sendMessage("SCHD " + currentJob.id + " " + availServers[0].type + " " + availServers[0].id, out);
-            } else { // otherwise fall back to the servers that can eventually provide the required
-                     // resources
-                // get capable servers
+            } else {//if no available server is found, recieve all the capable servers
                 serverdata[] capServers = getServersData(in, out, "capable");
 
-                // find the first capable server with an estimated runtime under the threshold
+                //first server with an estimated runtime under the threshold
                 int index = 0;
                 int currentEstRuntime = 0;
                 do {
-                    // get total estimate runtime for server
+                    //retrieve total estimated runtime of server
                     sendMessage("EJWT " + capServers[index].type + " " + capServers[index].id, out);
 
                     rply = receiveMessage(in);
@@ -123,11 +120,9 @@ public class MyClientV2 {
                     index++;
                 } while (currentEstRuntime > MAX_RUNTIME && index < capServers.length);
 
-                // decrement index by one as it is incremented regardless of whether loop will
-                // continue
                 index--;
 
-                // send scheduling request
+                //schedule the job
                 sendMessage("SCHD " + currentJob.id + " " + capServers[index].type + " " + capServers[index].id, out);
             }
 
@@ -136,7 +131,7 @@ public class MyClientV2 {
         }
     }
 
-    // send a message to the server
+    //sends a message to the server
     private static void sendMessage(String msg, DataOutputStream out) {
         try {
             out.write((msg + "\n").getBytes());
@@ -148,7 +143,7 @@ public class MyClientV2 {
         }
     }
 
-    // receive message
+    //recieve the message from the server and stores it globally
     private static String receiveMessage(BufferedReader in) {
         try {
             String reply = in.readLine();
@@ -159,26 +154,33 @@ public class MyClientV2 {
         }
     }
 
-    // extracts job info in useable format from a ds-server JOBN message
+    //extracts job info
     private static jobinfo extractJobInfo(String msg) {
         String[] info = msg.split(" ");
         jobinfo job = new jobinfo(info[1], info[2], info[3], info[4], info[5], info[6]);
         return job;
     }
 
-    // extracts server info in useable format from a ds-server GETS record
+    // extracts server data
     private static serverdata extractServerInfo(String msg) {
         String[] info = msg.split(" ");
         serverdata server = new serverdata(info[0], info[1], info[4], info[5], info[6]);
         return server;
     }
 
-    private static serverdata[] getServersData(BufferedReader in, DataOutputStream out, String mode) {
+    /**
+     * 
+     * @param in
+     * @param out
+     * @param request
+     * @return all the servers based on the request
+     */
+    private static serverdata[] getServersData(BufferedReader in, DataOutputStream out, String request) {
         String msg;
         String rply;
 
         // send the appropriate request based on the mode
-        switch (mode) {
+        switch (request) {
             case "all":
                 sendMessage("GETS All", out);
                 break;
