@@ -1,3 +1,5 @@
+package DataExtracter;
+
 public class jobinfo {
     public int receivedTime; // time the job was received
     public String id; // job id

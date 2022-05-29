@@ -1,3 +1,5 @@
+package DataExtracter;
+
 import java.util.*;
 
 public class serverdata {
