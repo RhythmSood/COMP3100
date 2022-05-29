@@ -5,7 +5,7 @@ import DataExtracter.serverdata;
 
 public class MyClientV2 {
 
-    private static jobinfo currentJob; // stores info of the current job
+    private static jobinfo currentJob; //stores info of the current job
 
     private static final int MAX_RUNTIME = 1000;
 
@@ -136,8 +136,6 @@ public class MyClientV2 {
         try {
             out.write((msg + "\n").getBytes());
             out.flush();
-            // output to console
-            System.out.println("Sent: " + msg);
         } catch (Exception e) {
             System.out.println(e);
         }
